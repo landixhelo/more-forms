@@ -9,15 +9,16 @@ const UserForm = (props) => {
   const [email, SetEmail] = useState("");
   const [password, PasswordOne] = useState("");
   const [repPassword, RepeatPassword] = useState("");
-  const [hasBeenTyping, setHasBeenTyping] = useState(false);
   const [usernameError, setUserNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
+  const [emailError, setEmail] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleUserName = (e) => {
     Firstname(e.target.value);
     if (e.target.value.length == 0) {
       setUserNameError("");
-    } else if (e.target.value.length < 2) {
+    } else if (e.target.value.length < 3) {
       setUserNameError("First name must be at least 2 characters");
     } else {
       setUserNameError("");
@@ -25,13 +26,34 @@ const UserForm = (props) => {
   };
 
   const handleLastName = (e) => {
-    SetEmail(e.target.value);
+    LastName(e.target.value);
     if (e.target.value.length == 0) {
-      setUserNameError("");
-    } else if (e.target.value.length < 2) {
+      setLastNameError("");
+    } else if (e.target.value.length < 3) {
       setLastNameError("More than two character");
     } else {
       setLastNameError("");
+    }
+  };
+
+  const handleEmail = (e) => {
+    SetEmail(e.target.value);
+    if (e.target.value.length == 0) {
+      setEmail("");
+    } else if (e.target.value.length < 3) {
+      setEmail("Email must be at least 2 characters");
+    } else {
+      setEmail("");
+    }
+  };
+  const handlePassword = (e) => {
+    setPasswordError(e.target.value);
+    if (e.target.value.length == 0) {
+      setPasswordError("");
+    } else if (e.target.value.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
+    } else {
+      setPasswordError("");
     }
   };
 
@@ -62,14 +84,13 @@ const UserForm = (props) => {
         </div>
         <div>
           <label>Email</label>
-          <input type="text" onChange={(e) => SetEmail(e.target.value)} />
+          <input type="text" onChange={handleEmail} />
+          <p>{emailError ? <span>{emailError}</span> : ""}</p>
         </div>
         <div>
           <label htmlFor="">Confirm Password</label>
-          <input
-            type="password"
-            onChange={(e) => PasswordOne(e.target.value)}
-          />
+          <input type="password" onChange={handlePassword} />
+          <p>{passwordError ? <span>{passwordError}</span> : ""} </p>
         </div>
         <div>
           <label>Password</label>
